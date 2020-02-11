@@ -1,0 +1,95 @@
+import java.awt.Font;
+import java.awt.Color;
+
+public void initializebuttons()
+    {
+        Font newFont = new Font("Times New Roman", Font.BOLD, 45);
+        for(int row = 0; row <= 2; row++)
+        {
+          for (int col = 0; col <= 2; col++)
+          {
+            buttons[row][col] = new JButton();
+            buttons[row][col].setText("");
+            buttons[row][col].addActionListener(new buttonListener());
+            
+            buttons[row][col].setFont(newFont);
+            buttons[row][col].setOpaque(true);
+
+            add(buttons[row][col]); //adds this button to JPanel (note: no need for JPanel.add(...)
+                                //because this whole class is a JPanel already          
+          }
+        }
+        
+    }
+    
+    public void resetButtons()
+    {
+        for(int row = 0; row <= 2; row++)
+        {
+          for (int col = 0; col <= 2; col++)
+          {
+            buttons[row][col].setText("");
+            buttons[row][col].setBackground(Color.WHITE);
+          }  
+        }
+        status = 0;
+    }
+    
+    public void showWin(int row1, int col1, int row2, int col2, int row3, int col3)
+    {
+        buttons[row1][col1].setBackground(Color.RED);
+        buttons[row2][col2].setBackground(Color.RED);
+        buttons[row3][col3].setBackground(Color.RED);
+    }
+    
+    public int checkStatus()
+        {
+            String result = "";
+            
+            //horizontal win check
+            for (int row = 0; row <= 2; row++)
+            {
+                result = checkRow (row);
+                if (result.compareTo("") > 0)
+                {
+                    setStatus(result);
+                    showWin(row, 0, row, 1, row, 2);
+                    return status;
+                }
+            }
+ 
+            // vertical win check
+            for (int col = 0; col <= 2; col++)
+            {
+                result = checkCol (col);
+                if (result.compareTo("") > 0)
+                {
+                    setStatus(result);
+                    showWin(0, col, 1, col, 2, col);
+                    return status;
+                }
+            }
+ 
+            //diagonal win check
+            if (! buttons[0][0].getText().equals("") &&
+                 buttons[0][0].getText().equals(buttons[1][1].getText()) &&
+                 buttons[0][0].getText().equals(buttons[2][2].getText()) )
+            {
+                result = buttons[0][0].getText();
+                setStatus(result);
+                showWin(0,0,1,1,2,2);
+                return status;
+            }
+
+            if (! buttons[0][2].getText().equals("") &&
+                 buttons[0][2].getText().equals(buttons[1][1].getText()) &&
+                 buttons[0][2].getText().equals(buttons[2][0].getText()) )
+            {
+                result = buttons[0][0].getText();
+                setStatus(result);
+                showWin(2,0,1,1,0,2);
+                return status;
+            }
+            
+            return status;
+        }
