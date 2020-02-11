@@ -1,0 +1,42 @@
+// at the top of the tictactoe class
+private int xWins = 0;
+private int oWins = 0;
+private int ties = 0;
+
+//at the end of the button class
+boolean isFull = true;
+            for(int row = 0; row <= 2; row++)
+            {
+                for(int col = 0; col <= 2; col++)
+                {
+                    if(!buttons[row][col].getText().equals(""))
+                    { 
+                        isFull = false;
+                    }
+                }
+            }
+            if(isFull && status == 0)
+            {
+                status = 3;
+            }
+            
+//buttons class
+public void winCount()
+        {
+            if(status == 1)
+            {
+                xWins++;
+            }
+            else if(status == 2)
+            {
+                oWins++;
+            }
+            else if(status == 3)
+            {
+                ties++;
+            }
+        }
+        
+// CALL WINCLASS IN ACTION PERFORMED
+            
+           
